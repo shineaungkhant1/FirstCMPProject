@@ -1,4 +1,4 @@
-package org.example.firstcmpproject
+package org.example.firstcmpproject.auth.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -46,7 +46,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
-fun NetflixLoginScreen() {
+fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
 
     var email by mutableStateOf("")
     var password by mutableStateOf("")
@@ -129,7 +129,7 @@ fun NetflixLoginScreen() {
                 // Sign In Button
                 Button(
                     onClick = {
-
+                        onTapSignIn()
                     },
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -230,5 +230,5 @@ fun NetflixLoginScreenAppBar() {
 @Preview
 @Composable
 fun NetflixLoginScreenPreview() {
-    NetflixLoginScreen()
+    NetflixLoginScreen(onTapSignIn = {})
 }

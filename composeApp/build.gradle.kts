@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias (libs.plugins.jetbrains.kotlin.serialization)
 }
 
 kotlin {
@@ -45,11 +46,15 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
             implementation(libs.material.icons.core)
+
+            implementation(libs.jetbrains.compose.navigation)
+            implementation(libs.kotlinx.serialization.json)
         }
 
         // IOS Only
-        nativeMain.dependencies {
+        iosMain.dependencies {
 
         }
 
