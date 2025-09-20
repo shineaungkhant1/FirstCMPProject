@@ -22,6 +22,7 @@ import firstcmpproject.composeapp.generated.resources.gladiator_photo
 import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
 import org.example.firstcmpproject.core.TEXT_LARGE
+import org.example.firstcmpproject.movie.MovieItem
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -47,15 +48,7 @@ fun CategoryLabelAndMovies(onTapMovie:(Int) -> Unit) {
             contentPadding = PaddingValues(horizontal = MARGIN_MEDIUM_2)
         ) {
             items(20) {
-                Image(
-                    painter = painterResource(Res.drawable.gladiator_photo),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(width = 120.dp, height = 180.dp)
-                        .clip(RoundedCornerShape(MARGIN_MEDIUM)),
-
-                )
+                MovieItem (onTapMovie)
             }
         }
     }

@@ -1,6 +1,7 @@
 package org.example.firstcmpproject.movie.details.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +24,7 @@ import org.example.firstcmpproject.core.MARGIN_XLARGE
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun DetailMovieImage() {
+fun DetailMovieImage(onTapBack : () -> Unit) {
     Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
         Image(
             painterResource(Res.drawable.gladiator_photo),
@@ -35,7 +36,9 @@ fun DetailMovieImage() {
             Icons.AutoMirrored.Default.KeyboardArrowLeft, contentDescription = null,
             tint = Color.White,
             modifier = Modifier.size(MARGIN_XLARGE).align(Alignment.TopStart)
-                .offset(x = MARGIN_MEDIUM, y = MARGIN_MEDIUM)
+                .offset(x = MARGIN_MEDIUM, y = MARGIN_MEDIUM).clickable{
+                    onTapBack()
+                }
         )
     }
 }

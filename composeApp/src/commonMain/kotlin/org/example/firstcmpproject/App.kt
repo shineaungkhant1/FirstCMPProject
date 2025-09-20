@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 
 import kotlinx.serialization.Serializable
 import org.example.firstcmpproject.auth.ui.NetflixLoginScreen
+import org.example.firstcmpproject.core.NetflixSansTypography
 import org.example.firstcmpproject.movie.details.ui.MovieDetailScreen
 import org.example.firstcmpproject.movie.home.ui.HomeScreen
 
@@ -16,7 +17,7 @@ import org.example.firstcmpproject.movie.home.ui.HomeScreen
 fun App() {
     val navController: NavHostController = rememberNavController()
 
-    MaterialTheme {
+    MaterialTheme(typography = NetflixSansTypography()) {
         NavHost(
             navController = navController,
             startDestination = NavRoutes.Login
@@ -42,7 +43,14 @@ fun App() {
             }
 
             composable <NavRoutes.MovieDetail>{
-                MovieDetailScreen()
+                MovieDetailScreen(
+                    onTapMovie = {
+                        navController.navigate(NavRoutes.MovieDetail(it))
+                    },
+                    onTapBack = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }

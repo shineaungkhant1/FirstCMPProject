@@ -40,8 +40,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import firstcmpproject.composeapp.generated.resources.Res
+import firstcmpproject.composeapp.generated.resources.email_or_phone_hint
+import firstcmpproject.composeapp.generated.resources.forget_password
+import firstcmpproject.composeapp.generated.resources.hide
 import firstcmpproject.composeapp.generated.resources.netflix_logo_app_bar
+import firstcmpproject.composeapp.generated.resources.or
+import firstcmpproject.composeapp.generated.resources.password_hint
+import firstcmpproject.composeapp.generated.resources.show
+import firstcmpproject.composeapp.generated.resources.sign_in
+import firstcmpproject.composeapp.generated.resources.use_a_sign_in_code
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
@@ -72,7 +81,7 @@ fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
                     },
                     placeholder = {
                         Text(
-                            "Email Or Phone Number",
+                            stringResource(Res.string.email_or_phone_hint),
                             color = Color(red = 145, green = 145, blue = 145)
                         )
 
@@ -99,7 +108,7 @@ fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
                     },
                     placeholder = {
                         Text(
-                            "Password",
+                            stringResource(Res.string.password_hint),
                             color = Color(red = 145, green = 145, blue = 145)
                         )
 
@@ -116,7 +125,7 @@ fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
                     visualTransformation = if (isPasswordShown) VisualTransformation.None else PasswordVisualTransformation(),
                     suffix = {
                         Text(
-                            if (isPasswordShown) "HIDE" else "SHOW",
+                            if (isPasswordShown) stringResource(Res.string.hide) else stringResource(Res.string.show),
                             color = Color(red = 145, green = 145, blue = 145),
                             modifier = Modifier.clickable {
                                 isPasswordShown = !isPasswordShown
@@ -137,14 +146,14 @@ fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
                     ), modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        "Sign In",
+                        stringResource(Res.string.sign_in),
                         color = Color.White,
                         fontSize = 16.sp
                         )
                 }
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    "OR",
+                    stringResource(Res.string.or),
                     color = Color(red = 145, green = 145, blue = 145),
                     fontSize = 16.sp
                 )
@@ -159,7 +168,7 @@ fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
                     ), modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        "Use a Sign In Code",
+                        stringResource(Res.string.use_a_sign_in_code),
                         color = Color.White,
                         fontSize = 16.sp
                     )
@@ -167,7 +176,7 @@ fun NetflixLoginScreen(onTapSignIn : () -> Unit = {}) {
 
                 Spacer(Modifier.height(32.dp))
                 Text(
-                    "Forget Password?",
+                    stringResource(Res.string.forget_password),
                     color =Color(red = 181, green = 181, blue = 181),
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable{}
