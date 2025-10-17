@@ -1,4 +1,4 @@
-package org.example.firstcmpproject.movie
+package org.example.firstcmpproject.movies
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -8,18 +8,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import firstcmpproject.composeapp.generated.resources.Res
 import firstcmpproject.composeapp.generated.resources.gladiator_photo
 import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MOVIE_ITEM_HEIGHT
 import org.example.firstcmpproject.core.MOVIE_ITEM_WIDTH
+import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun MovieItem(onTapMovie : (Int) -> Unit) {
-    Image(
-        painter = painterResource(Res.drawable.gladiator_photo),
+fun MovieItem(movie: MovieVO?,onTapMovie : (Int) -> Unit) {
+    AsyncImage(
+        movie?.getFullMovieBackdropPath(),
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier

@@ -1,4 +1,4 @@
-package org.example.firstcmpproject.movie.details.ui
+package org.example.firstcmpproject.movies.details.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -36,7 +36,7 @@ import org.example.firstcmpproject.core.TEXT_LARGE
 import org.example.firstcmpproject.core.TEXT_REGULAR
 import org.example.firstcmpproject.core.TEXT_SMALL
 import org.example.firstcmpproject.core.TEXT_SMALL_2X
-import org.example.firstcmpproject.movie.MovieItem
+import org.example.firstcmpproject.movies.MovieItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -154,7 +154,7 @@ fun MovieDetailScreen(onTapMovie: (Int) -> Unit, onTapBack : () -> Unit) {
                     horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
                 ) {
                     items((1..18).toList()) {
-                        MovieItem(onTapMovie = onTapMovie)
+                        MovieItem(movie = null,onTapMovie = onTapMovie)
                     }
 
                 }

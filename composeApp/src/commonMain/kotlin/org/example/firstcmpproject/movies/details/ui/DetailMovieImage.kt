@@ -1,4 +1,4 @@
-package org.example.firstcmpproject.movie.details.ui
+package org.example.firstcmpproject.movies.details.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

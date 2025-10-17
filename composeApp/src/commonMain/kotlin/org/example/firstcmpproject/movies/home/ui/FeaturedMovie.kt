@@ -1,8 +1,7 @@
-package org.example.firstcmpproject.movie.home.ui
+package org.example.firstcmpproject.movies.home.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,25 +24,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import firstcmpproject.composeapp.generated.resources.Res
 import firstcmpproject.composeapp.generated.resources.lalpalma_poster
 import org.example.firstcmpproject.core.MARGIN_CARD_MEDIUM_2
-import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
 import org.example.firstcmpproject.core.MARGIN_SMALL
-import org.example.firstcmpproject.core.MARGIN_XLARGE
-import org.example.firstcmpproject.core.MARGIN_XXLARGE
 import org.example.firstcmpproject.core.TEXT_REGULAR
-import org.example.firstcmpproject.core.TEXT_REGULAR_3X
-import org.example.firstcmpproject.movie.MovieActionButton
+import org.example.firstcmpproject.movies.MovieActionButton
+import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun FeaturedMovie(modifier: Modifier) {
+fun FeaturedMovie(movie: MovieVO, modifier: Modifier) {
+
+    println("Movie Poster Path: ${movie.getFullMoviePosterPath()}")
 
     Box(
         modifier = modifier.fillMaxWidth().padding(
@@ -54,8 +51,8 @@ fun FeaturedMovie(modifier: Modifier) {
         )
             .height(500.dp)
     ) {
-        Image(
-            painterResource(Res.drawable.lalpalma_poster),
+        AsyncImage(
+            movie.getFullMoviePosterPath(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()

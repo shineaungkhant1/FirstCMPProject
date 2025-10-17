@@ -34,6 +34,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.ktor.client.okhttp)
         }
 
         // Share Library
@@ -51,11 +52,14 @@ kotlin {
 
             implementation(libs.jetbrains.compose.navigation)
             implementation(libs.kotlinx.serialization.json)
+
+            implementation(libs.bundles.coil)
+            implementation(libs.bundles.ktor)
         }
 
         // IOS Only
         iosMain.dependencies {
-
+            implementation(libs.ktor.client.darwin)
         }
 
 

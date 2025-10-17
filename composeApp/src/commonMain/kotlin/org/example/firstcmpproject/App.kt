@@ -1,21 +1,49 @@
 package org.example.firstcmpproject
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
 import kotlinx.serialization.Serializable
 import org.example.firstcmpproject.auth.ui.NetflixLoginScreen
 import org.example.firstcmpproject.core.NetflixSansTypography
-import org.example.firstcmpproject.movie.details.ui.MovieDetailScreen
-import org.example.firstcmpproject.movie.home.ui.HomeScreen
+import org.example.firstcmpproject.movies.data.MovieRepository
+import org.example.firstcmpproject.movies.details.ui.MovieDetailScreen
+import org.example.firstcmpproject.movies.home.ui.HomeRoute
+import org.example.firstcmpproject.movies.home.viewmodel.HomeVIewModel
+import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl
 
 @Composable
 fun App() {
     val navController: NavHostController = rememberNavController()
+
+//    LaunchedEffect(key1 = Unit){
+//        try {
+//            val genres = MovieRepository.getGenres()
+//            println("Genres ====> $genres")
+//        } catch (e: Exception) {
+//            println("Error ===> ${e.message}" )
+//        }
+//
+//
+//        try {
+//            val genres = MovieRepository.getMovieByGenres(genreId = 28)
+//            println("Movies By Genre Id ====> $genres")
+//        } catch (e: Exception) {
+//            println("Error ===> ${e.message}" )
+//        }
+//
+//        try {
+//            val movieByFirstFiveGenre = MovieRepository.getMoviesWithFirestFiveGenres()
+//            println("Movies With First Five Genre Id ====> $movieByFirstFiveGenre")
+//        } catch (e: Exception) {
+//            println("Error ===> ${e.message}" )
+//        }
+//    }
 
     MaterialTheme(typography = NetflixSansTypography()) {
         NavHost(
@@ -34,15 +62,21 @@ fun App() {
                 )
             }
 
-            composable <NavRoutes.Home>{
-                HomeScreen(navigateToDetail = {
-                    navController.navigate(NavRoutes.MovieDetail(it) ){
+            composable<NavRoutes.Home> {
+
+                val homeViewModel = viewModel { HomeVIewModel() }
+
+
+                HomeRoute(
+                    viewModel = homeViewModel,
+                    navigateToDetail = {
+                    navController.navigate(NavRoutes.MovieDetail(it)) {
 
                     }
                 })
             }
 
-            composable <NavRoutes.MovieDetail>{
+            composable<NavRoutes.MovieDetail> {
                 MovieDetailScreen(
                     onTapMovie = {
                         navController.navigate(NavRoutes.MovieDetail(it))
@@ -58,7 +92,7 @@ fun App() {
 
 
 @Serializable
-sealed class  NavRoutes{
+sealed class NavRoutes {
     @Serializable
     object Login
 

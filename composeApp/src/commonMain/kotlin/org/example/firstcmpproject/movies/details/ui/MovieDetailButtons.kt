@@ -1,4 +1,4 @@
-package org.example.firstcmpproject.movie.details.ui
+package org.example.firstcmpproject.movies.details.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import firstcmpproject.composeapp.generated.resources.Res
 import firstcmpproject.composeapp.generated.resources.download_arrow
 import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
-import org.example.firstcmpproject.movie.MovieActionButton
+import org.example.firstcmpproject.movies.MovieActionButton
 import org.jetbrains.compose.resources.painterResource
 
 @Composable

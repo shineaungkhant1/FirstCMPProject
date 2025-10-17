@@ -1,32 +1,25 @@
-package org.example.firstcmpproject.movie.home.ui
+package org.example.firstcmpproject.movies.home.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import firstcmpproject.composeapp.generated.resources.Res
-import firstcmpproject.composeapp.generated.resources.gladiator_photo
 import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
 import org.example.firstcmpproject.core.TEXT_LARGE
-import org.example.firstcmpproject.movie.MovieItem
-import org.jetbrains.compose.resources.painterResource
+import org.example.firstcmpproject.movies.MovieItem
+import org.example.firstcmpproject.movies.data.vos.GenreVO
+import org.example.firstcmpproject.movies.data.vos.MovieVO
 
 @Composable
-fun CategoryLabelAndMovies(onTapMovie:(Int) -> Unit) {
+fun GenreNameAndMovies(genre: GenreVO, movieList : List<MovieVO>, onTapMovie:(Int) -> Unit) {
     Column(
         verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
         modifier = Modifier.padding(top = MARGIN_MEDIUM_2).clickable(
@@ -36,7 +29,7 @@ fun CategoryLabelAndMovies(onTapMovie:(Int) -> Unit) {
         )
     ) {
         Text(
-            "Today's Top Picks",
+            genre.name,
             color = Color.White,
             fontSize = TEXT_LARGE,
             fontWeight = FontWeight.Bold,
@@ -47,8 +40,8 @@ fun CategoryLabelAndMovies(onTapMovie:(Int) -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
             contentPadding = PaddingValues(horizontal = MARGIN_MEDIUM_2)
         ) {
-            items(20) {
-                MovieItem (onTapMovie)
+            items(movieList.count()) {
+                MovieItem (movie = movieList[it],onTapMovie)
             }
         }
     }
