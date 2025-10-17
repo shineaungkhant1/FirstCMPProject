@@ -3,6 +3,10 @@ package org.example.firstcmpproject
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -12,6 +16,7 @@ import kotlinx.serialization.Serializable
 import org.example.firstcmpproject.auth.ui.NetflixLoginScreen
 import org.example.firstcmpproject.core.NetflixSansTypography
 import org.example.firstcmpproject.movies.data.MovieRepository
+import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.example.firstcmpproject.movies.details.ui.MovieDetailScreen
 import org.example.firstcmpproject.movies.home.ui.HomeRoute
 import org.example.firstcmpproject.movies.home.viewmodel.HomeVIewModel
@@ -29,7 +34,6 @@ fun App() {
 //            println("Error ===> ${e.message}" )
 //        }
 //
-//
 //        try {
 //            val genres = MovieRepository.getMovieByGenres(genreId = 28)
 //            println("Movies By Genre Id ====> $genres")
@@ -40,6 +44,13 @@ fun App() {
 //        try {
 //            val movieByFirstFiveGenre = MovieRepository.getMoviesWithFirestFiveGenres()
 //            println("Movies With First Five Genre Id ====> $movieByFirstFiveGenre")
+//        } catch (e: Exception) {
+//            println("Error ===> ${e.message}" )
+//        }
+//
+//        try {
+//            val movieDetails = MovieRepository.getMovieDetails(movieId = 1156594)
+//            println("Movie Details ====> $movieDetails")
 //        } catch (e: Exception) {
 //            println("Error ===> ${e.message}" )
 //        }

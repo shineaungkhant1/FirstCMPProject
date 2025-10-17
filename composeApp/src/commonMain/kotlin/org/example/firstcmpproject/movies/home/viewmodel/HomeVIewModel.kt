@@ -18,10 +18,25 @@ class HomeVIewModel : ViewModel() {
 
     init {
         // Featured Movies
+//        viewModelScope.launch {
+//            val nowPlayingMovies = movieRepository.getNowPlayingMovies()
+//            val firstMovie = nowPlayingMovies.firstOrNull()
+//            if (firstMovie != null) {
+//                val detailedMovie = movieRepository.getMovieDetails(firstMovie.id)
+//                _state.update {
+//                    it.copy(featureMovie = detailedMovie)
+//                }
+//            }
+//        }
+
+        // Featured Movies
         viewModelScope.launch {
-            val featureMovie = movieRepository.getNowPlayingMovies().firstOrNull()
+//            val featuredMovie = movieRepository.getNowPlayingMovies().firstOrNull()
+            val featureMovie = movieRepository.getFeaturedMovie()
             _state.update {
-                it.copy(featureMovie = featureMovie)
+                it.copy(
+                    featureMovie = featureMovie
+                )
             }
         }
 

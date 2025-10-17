@@ -57,4 +57,31 @@ object MovieRepository {
             moviesByGenreDefferList.awaitAll()
         }
     }
+
+    suspend fun getFeaturedMovie(): MovieVO? {
+        /// Get Now Playing Movies
+        return withContext(Dispatchers.IO) {
+            val nowPlayingMovies = getNowPlayingMovies()
+
+            val firstMovieId = nowPlayingMovies.firstOrNull()?.id
+
+            val movieDetailDeferred = async {
+                val movieDetail = getMovieDetails(firstMovieId ?: 0)
+                return@async movieDetail
+            }
+
+            movieDetailDeferred.await()
+        }
+
+        /// First
+
+        /// Use id of the first movie -> Get Movie Details
+
+        /// Return
+    }
+    suspend fun getMovieDetails(movieId: Long): MovieVO? {
+        return withContext(Dispatchers.IO) {
+            apiService.getMovieDetails(movieId)
+        }
+    }
 }

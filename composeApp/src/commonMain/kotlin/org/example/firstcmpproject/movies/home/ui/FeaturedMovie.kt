@@ -76,42 +76,27 @@ fun FeaturedMovie(movie: MovieVO, modifier: Modifier) {
                     horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        "Suspenseful",
-                        color = Color.White,
-                        fontSize = TEXT_REGULAR,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Surface(
-                        color = Color.White,
-                        shape = CircleShape,
-                        modifier = Modifier.size(
-                            MARGIN_SMALL
+                    movie.genres?.forEachIndexed { index, data ->
+                        Text(
+                            data.name,
+                            color = Color.White,
+                            fontSize = TEXT_REGULAR,
+                            fontWeight = FontWeight.Medium
                         )
-                    ) {
+                        if (index != movie.genres.size - 1)
+                            Surface(
+                                color = Color.White,
+                                shape = CircleShape,
+                                modifier = Modifier.size(
+                                    MARGIN_SMALL
+                                )
+                            ) {
+
+                            }
 
                     }
-                    Text(
-                        "Emotional",
-                        color = Color.White,
-                        fontSize = TEXT_REGULAR,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Surface(
-                        color = Color.White,
-                        shape = CircleShape,
-                        modifier = Modifier.size(
-                            MARGIN_SMALL
-                        )
-                    ) {
 
-                    }
-                    Text(
-                        "Drama",
-                        color = Color.White,
-                        fontSize = TEXT_REGULAR,
-                        fontWeight = FontWeight.Medium
-                    )
+
                 }
                 FeatureMovieButtons()
             }

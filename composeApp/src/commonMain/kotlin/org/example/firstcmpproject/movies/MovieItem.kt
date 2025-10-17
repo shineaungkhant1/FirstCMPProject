@@ -27,7 +27,7 @@ fun MovieItem(movie: MovieVO?,onTapMovie : (Int) -> Unit) {
             .size(width = MOVIE_ITEM_WIDTH, height = MOVIE_ITEM_HEIGHT)
             .clip(RoundedCornerShape(MARGIN_MEDIUM)).clickable(
                 onClick = {
-                    onTapMovie(1)
+                    movie?.let { onTapMovie(it.id.toInt()) }
                 }
             )
 

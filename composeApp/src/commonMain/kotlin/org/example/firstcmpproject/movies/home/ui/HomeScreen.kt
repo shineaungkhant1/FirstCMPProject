@@ -50,7 +50,7 @@ fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
                         movie = state.featureMovie,
                         modifier = Modifier.clickable(
                         onClick = {
-                            navigateToDetail(1)
+                            navigateToDetail(state.featureMovie.id.toInt())
                         }
                     ))
                 } else {
