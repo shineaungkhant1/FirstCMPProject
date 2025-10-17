@@ -14,7 +14,7 @@ class MovieVO(
     val backdropPath: String,
 
     @SerialName("belongs_to_collection")
-    val belongsToCollection: BelongsToCollectionVO,
+    val belongsToCollection: BelongsToCollectionVO?,
 
     @SerialName("budget")
     val budget: Long? ,
