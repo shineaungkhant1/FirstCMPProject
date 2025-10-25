@@ -29,7 +29,7 @@ class MovieVO(
     val imdbId: String?,
 
     @SerialName("original_country")
-    val originalCountry: String?,
+    val originalCountry: List<String>?,
 
     @SerialName("production_companies")
     val productionCompanies: List<ProductionCompanyVO>?,

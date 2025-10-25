@@ -15,6 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.serialization.Serializable
 import org.example.firstcmpproject.auth.ui.NetflixLoginScreen
 import org.example.firstcmpproject.core.NetflixSansTypography
+import org.example.firstcmpproject.core.persistence.DatabaseDriverFactory
+import org.example.firstcmpproject.core.persistence.DatabaseProvider
 import org.example.firstcmpproject.movies.data.MovieRepository
 import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.example.firstcmpproject.movies.details.ui.MovieDetailScreen
@@ -23,8 +25,15 @@ import org.example.firstcmpproject.movies.home.viewmodel.HomeVIewModel
 import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl
 
 @Composable
-fun App() {
+fun App(
+    databaseDriverFactory: DatabaseDriverFactory
+) {
+
+    // Initialize Database
+    DatabaseProvider.initDatabase(databaseDriverFactory)
+
     val navController: NavHostController = rememberNavController()
+
 
 //    LaunchedEffect(key1 = Unit){
 //        try {

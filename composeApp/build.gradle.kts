@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias (libs.plugins.jetbrains.kotlin.serialization)
+
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -35,6 +37,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.android.driver)
         }
 
         // Share Library
@@ -55,6 +59,10 @@ kotlin {
 
             implementation(libs.bundles.coil)
             implementation(libs.bundles.ktor)
+
+            implementation(libs.runtime)
+
+            implementation(libs.sqlite.bundled)
         }
 
         // IOS Only
@@ -66,6 +74,10 @@ kotlin {
         // Test
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+
+        nativeMain.dependencies {
+            implementation(libs.native.driver)
         }
     }
 }
@@ -101,3 +113,11 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+
+sqldelight{
+    databases{
+        create("AppDatabase"){
+            packageName.set("org.example.firstcmpproject.core.persistence")
+        }
+    }
+}
