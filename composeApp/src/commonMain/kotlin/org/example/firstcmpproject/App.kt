@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import org.example.firstcmpproject.auth.ui.NetflixLoginScreen
 import org.example.firstcmpproject.core.NetflixSansTypography
@@ -20,6 +21,8 @@ import org.example.firstcmpproject.core.persistence.DatabaseProvider
 import org.example.firstcmpproject.movies.data.MovieRepository
 import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.example.firstcmpproject.movies.details.ui.MovieDetailScreen
+import org.example.firstcmpproject.movies.details.ui.MovieDetailsRoute
+import org.example.firstcmpproject.movies.details.viewmodel.MovieDetailsViewModel
 import org.example.firstcmpproject.movies.home.ui.HomeRoute
 import org.example.firstcmpproject.movies.home.viewmodel.HomeVIewModel
 import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl
@@ -90,14 +93,18 @@ fun App(
                 HomeRoute(
                     viewModel = homeViewModel,
                     navigateToDetail = {
-                    navController.navigate(NavRoutes.MovieDetail(it)) {
+                    navController.navigate(NavRoutes.MovieDetail(it.toLong())) {
 
                     }
                 })
             }
 
-            composable<NavRoutes.MovieDetail> {
-                MovieDetailScreen(
+            composable<NavRoutes.MovieDetail> { backStackEntry ->
+                val args = backStackEntry.toRoute<NavRoutes.MovieDetail>()
+                val movieId = args.movieId
+                val movieDetailsViewModel = viewModel { MovieDetailsViewModel(movieId.toLong()) }
+                MovieDetailsRoute(
+                    viewModel = movieDetailsViewModel,
                     onTapMovie = {
                         navController.navigate(NavRoutes.MovieDetail(it))
                     },
@@ -120,7 +127,7 @@ sealed class NavRoutes {
     object Home
 
     @Serializable
-    data class MovieDetail(val movieId: Int)
+    data class MovieDetail(val movieId: Long)
 }
 
 

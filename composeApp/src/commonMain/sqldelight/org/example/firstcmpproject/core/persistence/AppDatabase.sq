@@ -32,8 +32,8 @@ CREATE TABLE  Movie(
 
 
 insertPartialMovie:
-INSERT OR REPLACE INTO Movie(id,adult,backDropPath,genreIds, originalLanguage, originalTitle, overview,popularity,popularity,posterPath,releaseDate,title,video,voteAverage,voteCount)
-VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+INSERT OR REPLACE INTO Movie(id,adult,backDropPath,genreIds, originalLanguage, originalTitle, overview,popularity,posterPath,releaseDate,title,video,voteAverage,voteCount)
+VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);
 
 insertFullMovie:
 INSERT OR REPLACE INTO

@@ -100,6 +100,11 @@ class MovieVO(
         return "MovieVO(adult=$adult, backdropPath='$backdropPath', belongsToCollection=$belongsToCollection, budget=$budget, genres=$genres, homepage=$homepage, imdbId=$imdbId, originalCountry=$originalCountry, productionCompanies=$productionCompanies, productionCountries=$productionCountries, revenue=$revenue, runtime=$runtime, spokenLanguages=$spokenLanguages, status=$status, tagline=$tagline, genreIds=$genreIds, id=$id, originalLanguage='$originalLanguage', originalTitle='$originalTitle', overview=$overview, popularity=$popularity, posterPath='$posterPath', releaseDate=$releaseDate, title=$title, video=$video, voteAverage=$voteAverage, voteCount=$voteCount)"
     }
 
+    fun ferHourAndMinutes(): String {
+        val hours = runtime?.div(60)
+        val minutes = runtime?.rem(60)
+        return "${hours}h ${minutes}m"
+    }
 
 }
 

@@ -21,7 +21,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun HomeRoute(
     viewModel: HomeVIewModel,
-    navigateToDetail : (Int) -> Unit = {}
+    navigateToDetail : (Long) -> Unit = {}
 
 ){
 
@@ -34,7 +34,7 @@ fun HomeRoute(
 }
 
 @Composable
-fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
+fun HomeScreen(state: HomeState,navigateToDetail : (Long) -> Unit = {}) {
     Scaffold(containerColor = Color.Black, topBar = {
         HomeAppBar()
     }) { paddingValues ->
@@ -50,7 +50,7 @@ fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
                         movie = state.featureMovie,
                         modifier = Modifier.clickable(
                         onClick = {
-                            navigateToDetail(state.featureMovie.id.toInt())
+                            navigateToDetail(state.featureMovie.id)
                         }
                     ))
                 } else {
