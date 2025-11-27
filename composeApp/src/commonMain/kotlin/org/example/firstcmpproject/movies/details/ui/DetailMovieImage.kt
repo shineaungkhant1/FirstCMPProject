@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import firstcmpproject.composeapp.generated.resources.Res
 import firstcmpproject.composeapp.generated.resources.gladiator_photo
 import org.example.firstcmpproject.core.MARGIN_MEDIUM
@@ -24,10 +25,10 @@ import org.example.firstcmpproject.core.MARGIN_XLARGE
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun DetailMovieImage(onTapBack : () -> Unit) {
+fun DetailMovieImage(image:String,onTapBack : () -> Unit) {
     Box(modifier = Modifier.fillMaxWidth().height(300.dp)) {
-        Image(
-            painterResource(Res.drawable.gladiator_photo),
+        AsyncImage(
+            image,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop

@@ -8,6 +8,6 @@ interface  ApiService{
     suspend fun getNowPlayingMovies(page : Int): MovieListResponse?
     suspend fun getGenres(): GenreListResponse?
 
-    suspend fun getMoviesByGenre(genderId : Int): MovieListResponse?
+    suspend fun getMoviesByGenre(genderId: Int?): MovieListResponse?
     suspend fun getMovieDetails(movieId: Long): MovieVO?
 }

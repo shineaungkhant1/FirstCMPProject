@@ -5,7 +5,7 @@ const val URL = "https://api.themoviedb.org"
 const val NOW_PLAYING_MOVIES = "/3/movie/now_playing"
 const val GET_GENRES = "/3/genre/movie/list"
 const val GET_MOVIES_BY_GENRE = "/3/discover/movie"
-const val MOVIE_DETAILS = "/3/movie/{movie_id}"
+const val MOVIE_DETAILS = "/3/movie"
 
 
 const val FEATURED_MOVIE_IMAGE_BASE_URL = "https://www.themoviedb.org/t/p/w1280"

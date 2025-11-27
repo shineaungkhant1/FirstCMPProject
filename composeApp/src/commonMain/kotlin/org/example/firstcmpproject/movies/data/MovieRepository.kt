@@ -4,18 +4,34 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.example.firstcmpproject.core.persistence.AppDatabaseProvider
 import org.example.firstcmpproject.movies.data.vos.GenreVO
 import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.example.firstcmpproject.movies.network.api_service.ApiService
 import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl
+import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl.getMovieDetails
 
 object MovieRepository {
     val apiService : ApiService = ApiServiceImpl
 
+    val appDatabase = AppDatabaseProvider.db
+
+
     suspend fun getNowPlayingMovies() : List<MovieVO>{
+
         return withContext(Dispatchers.IO){
+
             val  response = apiService.getNowPlayingMovies(1)
+
+            launch {
+                appDatabase.movieDao().insertMovies(response?.results ?: listOf())
+                println("Movie from db====> ${appDatabase.movieDao().getAllMovies()}")
+            }
+
+
+
             return@withContext response?.results ?: listOf()
         }
     }
@@ -27,7 +43,7 @@ object MovieRepository {
         }
     }
 
-    suspend fun getMovieByGenres(genreId : Int) : List<MovieVO>{
+    suspend fun getMovieByGenres(genreId: Int?) : List<MovieVO>{
         return withContext(Dispatchers.IO){
             val  response = apiService.getMoviesByGenre(genreId)
             return@withContext response?.results ?: listOf()
@@ -64,24 +80,31 @@ object MovieRepository {
             val nowPlayingMovies = getNowPlayingMovies()
 
             val firstMovieId = nowPlayingMovies.firstOrNull()?.id
-
-            val movieDetailDeferred = async {
-                val movieDetail = getMovieDetails(firstMovieId ?: 0)
-                return@async movieDetail
+            if(firstMovieId != null){
+                val  movieDetail= getMovieDetails(firstMovieId)
+                return@withContext movieDetail
+            } else{
+                return@withContext null
             }
 
-            movieDetailDeferred.await()
+
+
         }
 
-        /// First
-
-        /// Use id of the first movie -> Get Movie Details
-
-        /// Return
     }
     suspend fun getMovieDetails(movieId: Long): MovieVO? {
         return withContext(Dispatchers.IO) {
-            apiService.getMovieDetails(movieId)
+            val movieDetails = apiService.getMovieDetails(movieId)
+            launch {
+                if (movieDetails != null) {
+                    appDatabase.movieDao().insertSingleMovie(movieDetails)
+                }
+            }
+            movieDetails
         }
+    }
+
+    suspend fun getMovieDetailsFromDB(movieId: Long): MovieVO? {
+        return appDatabase.movieDao().getMovieById(movieId)
     }
 }

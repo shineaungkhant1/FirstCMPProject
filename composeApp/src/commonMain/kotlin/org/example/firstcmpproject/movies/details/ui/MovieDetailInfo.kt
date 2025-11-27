@@ -27,16 +27,17 @@ import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
 import org.example.firstcmpproject.core.MARGIN_SMALL
 import org.example.firstcmpproject.core.MARGIN_XXLARGE
 import org.example.firstcmpproject.core.TEXT_REGULAR
+import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun MovieDetailInfo(){
+fun MovieDetailInfo(movieVO: MovieVO){
     Row(
         horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM_2),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            "2024",
+            movieVO.releaseDate?.substring(0,4) ?: "",
             color = Color.White,
             fontSize = TEXT_REGULAR,
             fontWeight = FontWeight.Bold,
@@ -59,7 +60,7 @@ fun MovieDetailInfo(){
                 )
         }
         Text(
-            "1h 59m",
+            movieVO.ferHourAndMinutes(),
             color = Color.White,
             fontSize = TEXT_REGULAR,
             fontWeight = FontWeight.Bold,

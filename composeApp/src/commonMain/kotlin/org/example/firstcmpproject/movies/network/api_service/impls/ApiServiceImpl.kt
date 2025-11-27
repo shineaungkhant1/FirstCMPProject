@@ -45,7 +45,7 @@ object ApiServiceImpl : ApiService {
         return  transformResult<GenreListResponse?>(httpResponse)
     }
 
-    override suspend fun getMoviesByGenre(genderId: Int): MovieListResponse? {
+    override suspend fun getMoviesByGenre(genderId: Int?): MovieListResponse? {
         val httpResponse = HttpClientProvider.httpClient.get("$GET_MOVIES_BY_GENRE?with_genres=$genderId"){
             header(HttpHeaders.Authorization, "Bearer $API_KEY")
         }
@@ -53,7 +53,7 @@ object ApiServiceImpl : ApiService {
     }
 
     override suspend fun getMovieDetails(movieId: Long): MovieVO? {
-        val httpResponse = HttpClientProvider.httpClient.get(MOVIE_DETAILS.replace("{movie_id}", movieId.toString())){
+        val httpResponse = HttpClientProvider.httpClient.get("$MOVIE_DETAILS/$movieId"){
             header(HttpHeaders.Authorization, "Bearer $API_KEY")
         }
         return transformResult<MovieVO?>(httpResponse)

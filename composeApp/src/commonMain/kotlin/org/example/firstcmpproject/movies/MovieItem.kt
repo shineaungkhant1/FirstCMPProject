@@ -18,18 +18,19 @@ import org.example.firstcmpproject.movies.data.vos.MovieVO
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun MovieItem(movie: MovieVO?,onTapMovie : (Int) -> Unit) {
-    AsyncImage(
-        movie?.getFullMovieBackdropPath(),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .size(width = MOVIE_ITEM_WIDTH, height = MOVIE_ITEM_HEIGHT)
-            .clip(RoundedCornerShape(MARGIN_MEDIUM)).clickable(
-                onClick = {
-                    movie?.let { onTapMovie(it.id.toInt()) }
-                }
-            )
-
+fun MovieItem(movie: MovieVO?,onTapMovie : (Long) -> Unit) {
+    if(movie != null){
+        AsyncImage(
+            movie.getFullMovieBackdropPath(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(width = MOVIE_ITEM_WIDTH, height = MOVIE_ITEM_HEIGHT)
+                .clip(RoundedCornerShape(MARGIN_MEDIUM)).clickable(
+                    onClick = {
+                        movie.let { onTapMovie(it.id) }
+                    }
+                )
         )
+    }
 }

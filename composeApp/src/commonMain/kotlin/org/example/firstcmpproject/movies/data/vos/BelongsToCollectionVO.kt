@@ -12,10 +12,10 @@ class BelongsToCollectionVO (
     val name: String,
 
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
 
     @SerialName("backdrop_path")
-    val backdropPath: String
+    val backdropPath: String?
 )
 
 //

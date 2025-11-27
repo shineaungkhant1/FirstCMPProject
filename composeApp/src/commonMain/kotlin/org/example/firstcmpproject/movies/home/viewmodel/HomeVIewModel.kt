@@ -8,15 +8,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.example.firstcmpproject.movies.data.MovieRepository
 import org.example.firstcmpproject.movies.home.state.HomeState
+import org.example.firstcmpproject.redux.Actions
+import org.example.firstcmpproject.redux.AppState
+import org.reduxkotlin.Store
+import org.reduxkotlin.StoreSubscription
 
-class HomeVIewModel : ViewModel() {
+class HomeVIewModel(val store : Store<AppState>) : ViewModel() {
     val movieRepository = MovieRepository;
 
-    private val _state = MutableStateFlow(HomeState())
+//    private val _state = MutableStateFlow(HomeState())
+    private val _state = MutableStateFlow(AppState())
 
     val state = _state.asStateFlow()
 
-    init {
+    var subscription : StoreSubscription? = null
+
+//    init {
         // Featured Movies
 //        viewModelScope.launch {
 //            val nowPlayingMovies = movieRepository.getNowPlayingMovies()
@@ -30,21 +37,40 @@ class HomeVIewModel : ViewModel() {
 //        }
 
         // Featured Movies
-        viewModelScope.launch {
-//            val featuredMovie = movieRepository.getNowPlayingMovies().firstOrNull()
-            val featureMovie = movieRepository.getFeaturedMovie()
-            _state.update {
-                it.copy(
-                    featureMovie = featureMovie
-                )
-            }
-        }
+//        viewModelScope.launch {
+////            val featuredMovie = movieRepository.getNowPlayingMovies().firstOrNull()
+//            val featureMovie = movieRepository.getFeaturedMovie()
+//            _state.update {
+//                it.copy(
+//                    featureMovie = featureMovie
+//                )
+//            }
+//        }
+//
+//        viewModelScope.launch {
+//            val moviesByGenres = movieRepository.getMoviesWithFirestFiveGenres()
+//            _state.update {
+//                it.copy(moviesByGenre = moviesByGenres)
+//            }
+//        }
+//    }
+
+    init {
+        store.dispatch(Actions.MiddlewareActions.FetchFeatureMovie)
+        store.dispatch(Actions.MiddlewareActions.FetchMoviesByGenre)
 
         viewModelScope.launch {
-            val moviesByGenres = movieRepository.getMoviesWithFirestFiveGenres()
-            _state.update {
-                it.copy(moviesByGenre = moviesByGenres)
+            subscription = store.subscribe{
+                _state.update { store.state }
             }
+
         }
+    }
+
+    override fun onCleared() {
+        subscription?.invoke()
+
+        super.onCleared()
+
     }
 }

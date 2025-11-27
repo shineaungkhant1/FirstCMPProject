@@ -19,14 +19,10 @@ import org.example.firstcmpproject.movies.data.vos.GenreVO
 import org.example.firstcmpproject.movies.data.vos.MovieVO
 
 @Composable
-fun GenreNameAndMovies(genre: GenreVO, movieList : List<MovieVO>, onTapMovie:(Int) -> Unit) {
+fun GenreNameAndMovies(genre: GenreVO, movieList : List<MovieVO>, onTapMovie:(Long) -> Unit) {
     Column(
         verticalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
-        modifier = Modifier.padding(top = MARGIN_MEDIUM_2).clickable(
-            onClick = {
-                onTapMovie(1)
-            }
-        )
+        modifier = Modifier.padding(top = MARGIN_MEDIUM_2)
     ) {
         Text(
             genre.name,
@@ -40,8 +36,10 @@ fun GenreNameAndMovies(genre: GenreVO, movieList : List<MovieVO>, onTapMovie:(In
             horizontalArrangement = Arrangement.spacedBy(MARGIN_MEDIUM),
             contentPadding = PaddingValues(horizontal = MARGIN_MEDIUM_2)
         ) {
-            items(movieList.count()) {
-                MovieItem (movie = movieList[it],onTapMovie)
+            items(movieList.count()) { index ->
+                MovieItem (movie = movieList[index], onTapMovie = {
+                    onTapMovie(movieList[index].id)
+                })
             }
         }
     }

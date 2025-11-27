@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias (libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -55,6 +56,12 @@ kotlin {
 
             implementation(libs.bundles.coil)
             implementation(libs.bundles.ktor)
+
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
+
+            implementation("org.reduxkotlin:redux-kotlin-threadsafe:0.6.1")
+
         }
 
         // IOS Only
@@ -99,5 +106,6 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    ksp(libs.androidx.room.compiler)
 }
 

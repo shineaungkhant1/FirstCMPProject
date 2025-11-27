@@ -15,26 +15,27 @@ import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
 import org.example.firstcmpproject.movies.home.state.HomeState
 import org.example.firstcmpproject.movies.home.viewmodel.HomeVIewModel
+import org.example.firstcmpproject.redux.AppState
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
 @Composable
 fun HomeRoute(
     viewModel: HomeVIewModel,
-    navigateToDetail : (Int) -> Unit = {}
+    navigateToDetail: (Long) -> Unit = {}
 
-){
+) {
 
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreen(
-        state,
+        state = state,
         navigateToDetail = navigateToDetail
     )
 }
 
 @Composable
-fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
+fun HomeScreen(state: AppState, navigateToDetail: (Long) -> Unit = {}) {
     Scaffold(containerColor = Color.Black, topBar = {
         HomeAppBar()
     }) { paddingValues ->
@@ -45,14 +46,14 @@ fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
             }
 
             item {
-                if(state.featureMovie != null){
+                if (state.featureMovie != null) {
                     FeaturedMovie(
                         movie = state.featureMovie,
                         modifier = Modifier.clickable(
-                        onClick = {
-                            navigateToDetail(state.featureMovie.id.toInt())
-                        }
-                    ))
+                            onClick = {
+                                navigateToDetail(state.featureMovie.id)
+                            }
+                        ))
                 } else {
                     println("Featured movie is null")
                 }
@@ -66,7 +67,12 @@ fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
             // Movies and Categories
 
             items(state.moviesByGenre.count()) { index ->
-               GenreNameAndMovies(genre = state.moviesByGenre[index].first, movieList = state.moviesByGenre[index].second,onTapMovie = navigateToDetail)
+                GenreNameAndMovies(
+                    genre = state.moviesByGenre[index].first,
+                    movieList = state.moviesByGenre[index].second,
+                    onTapMovie = {
+                        navigateToDetail(it)
+                    })
             }
 
         }
@@ -77,5 +83,5 @@ fun HomeScreen(state: HomeState,navigateToDetail : (Int) -> Unit = {}) {
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen(state = HomeState())
+    HomeScreen(state = AppState())
 }
