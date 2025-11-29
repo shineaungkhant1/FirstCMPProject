@@ -7,12 +7,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import org.example.firstcmpproject.core.MARGIN_MEDIUM
 import org.example.firstcmpproject.core.MARGIN_MEDIUM_2
+import org.example.firstcmpproject.movies.home.actions.HomeActions
+import org.example.firstcmpproject.movies.home.events.HomeEvents
 import org.example.firstcmpproject.movies.home.state.HomeState
 import org.example.firstcmpproject.movies.home.viewmodel.HomeVIewModel
 import org.example.firstcmpproject.redux.AppState
@@ -28,14 +32,27 @@ fun HomeRoute(
 
 
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigationSharedFlow.collectLatest { event ->
+            when(event){
+                is HomeEvents.NavigateToDetails -> {
+                    navigateToDetail(event.movieId)
+                }
+            }
+        }
+    }
+
     HomeScreen(
         state = state,
-        navigateToDetail = navigateToDetail
+        onAction =  { action ->
+            viewModel.onAction(action)
+        }
     )
 }
 
 @Composable
-fun HomeScreen(state: AppState, navigateToDetail: (Long) -> Unit = {}) {
+fun HomeScreen(state: AppState, onAction: (HomeActions) -> Unit) {
     Scaffold(containerColor = Color.Black, topBar = {
         HomeAppBar()
     }) { paddingValues ->
@@ -51,7 +68,10 @@ fun HomeScreen(state: AppState, navigateToDetail: (Long) -> Unit = {}) {
                         movie = state.featureMovie,
                         modifier = Modifier.clickable(
                             onClick = {
-                                navigateToDetail(state.featureMovie.id)
+//                                navigateToDetail(state.featureMovie.id)
+                                onAction(HomeActions.OnTapMovie(
+                                    state.featureMovie.id
+                                ))
                             }
                         ))
                 } else {
@@ -71,7 +91,8 @@ fun HomeScreen(state: AppState, navigateToDetail: (Long) -> Unit = {}) {
                     genre = state.moviesByGenre[index].first,
                     movieList = state.moviesByGenre[index].second,
                     onTapMovie = {
-                        navigateToDetail(it)
+//                        navigateToDetail(it)
+                        onAction(HomeActions.OnTapMovie(it))
                     })
             }
 
@@ -83,5 +104,5 @@ fun HomeScreen(state: AppState, navigateToDetail: (Long) -> Unit = {}) {
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen(state = AppState())
+//    HomeScreen(state = AppState())
 }

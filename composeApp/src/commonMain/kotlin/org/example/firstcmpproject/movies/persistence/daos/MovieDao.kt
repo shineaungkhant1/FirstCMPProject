@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import org.example.firstcmpproject.movies.data.vos.MovieVO
 
 @Dao
@@ -16,6 +17,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies WHERE id = :movieId LIMIT 1")
     suspend fun getMovieById(movieId: Long): MovieVO?
+
+    @Query("SELECT * FROM movies WHERE id = :movieId LIMIT 1")
+    fun getMovieByIdFlow(movieId: Long): Flow<MovieVO?>
 
     @Query("SELECT * FROM movies")
     suspend fun getAllMovies(): List<MovieVO>

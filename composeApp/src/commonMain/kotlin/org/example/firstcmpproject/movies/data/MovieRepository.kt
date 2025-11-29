@@ -1,9 +1,17 @@
 package org.example.firstcmpproject.movies.data
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.example.firstcmpproject.core.persistence.AppDatabaseProvider
@@ -13,6 +21,7 @@ import org.example.firstcmpproject.movies.network.api_service.ApiService
 import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl
 import org.example.firstcmpproject.movies.network.api_service.impls.ApiServiceImpl.getMovieDetails
 
+@OptIn(ExperimentalCoroutinesApi::class)
 object MovieRepository {
     val apiService : ApiService = ApiServiceImpl
 
@@ -74,6 +83,20 @@ object MovieRepository {
         }
     }
 
+    suspend fun getMoviesWithFirestFiveGenresFlow() : List<Pair<GenreVO, List<MovieVO>>>{
+      return getGenres()
+           .asFlow()
+           .take(5)
+           .flatMapMerge {genreVO ->
+               flow {
+                  val moviesByGenre = getMovieByGenres(genreVO.id)
+                   emit(Pair(genreVO,moviesByGenre))
+               }
+           }
+           .flowOn(Dispatchers.IO)
+           .toList()
+    }
+
     suspend fun getFeaturedMovie(): MovieVO? {
         /// Get Now Playing Movies
         return withContext(Dispatchers.IO) {
@@ -106,5 +129,10 @@ object MovieRepository {
 
     suspend fun getMovieDetailsFromDB(movieId: Long): MovieVO? {
         return appDatabase.movieDao().getMovieById(movieId)
+    }
+
+
+    fun getMovieDetailsFromDBFlow(movieId: Long): Flow<MovieVO?> {
+        return appDatabase.movieDao().getMovieByIdFlow(movieId)
     }
 }
