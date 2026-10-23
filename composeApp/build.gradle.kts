@@ -36,6 +36,9 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
 
         // Share Library
@@ -61,6 +64,10 @@ kotlin {
             implementation(libs.sqlite.bundled)
 
             implementation("org.reduxkotlin:redux-kotlin-threadsafe:0.6.1")
+
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            api(libs.koin.core)
 
         }
 
